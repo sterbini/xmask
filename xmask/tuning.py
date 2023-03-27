@@ -10,7 +10,12 @@ def machine_tuning(line,
         enable_chromaticity_correction=True,
         knob_names=None,
         targets=None,
-        line_co_ref=None, co_corr_config=None):
+        line_co_ref=None, co_corr_config=None,
+        tune_knob_step=1e-8,
+        chromaticity_knob_step=1e-4,
+        tune_tol=1e-4,
+        chromaticity_tol=0.05,
+        ):
 
     # Correct closed orbit
     if enable_closed_orbit_correction:
@@ -53,10 +58,10 @@ def machine_tuning(line,
             assert 'qx' in targets
             assert 'qy' in targets
 
-            vary.append(xt.Vary(knob_names['q_knob_1'], step=1e-8))
-            vary.append(xt.Vary(knob_names['q_knob_2'], step=1e-8))
-            match_targets.append(xt.Target('qx', targets['qx'], tol=1e-4))
-            match_targets.append(xt.Target('qy', targets['qy'], tol=1e-4))
+            vary.append(xt.Vary(knob_names['q_knob_1'], step=tune_knob_step))
+            vary.append(xt.Vary(knob_names['q_knob_2'], step=tune_knob_step))
+            match_targets.append(xt.Target('qx', targets['qx'], tol=tune_tol))
+            match_targets.append(xt.Target('qy', targets['qy'], tol=tune_tol))
 
         if enable_chromaticity_correction:
             assert knob_names is not None
@@ -66,10 +71,10 @@ def machine_tuning(line,
             assert 'dqx' in targets
             assert 'dqy' in targets
 
-            vary.append(xt.Vary(knob_names['dq_knob_1'], step=1e-4))
-            vary.append(xt.Vary(knob_names['dq_knob_2'], step=1e-4))
-            match_targets.append(xt.Target('dqx', targets['dqx'], tol=0.05))
-            match_targets.append(xt.Target('dqy', targets['dqy'], tol=0.05))
+            vary.append(xt.Vary(knob_names['dq_knob_1'], step=chromaticity_knob_step))
+            vary.append(xt.Vary(knob_names['dq_knob_2'], step=chromaticity_knob_step))
+            match_targets.append(xt.Target('dqx', targets['dqx'], tol=chromaticity_tol))
+            match_targets.append(xt.Target('dqy', targets['dqy'], tol=chromaticity_tol))
 
         print(f'Matching tune and chromaticity')
         line.match(verbose=False, vary=vary, targets=match_targets)
