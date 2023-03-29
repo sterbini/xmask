@@ -65,20 +65,23 @@ def attach_beam_to_sequence(sequence, beam_to_configure=1, beam_configuration=No
 
 def save_lines_for_closed_orbit_reference(sequence_clockwise, sequence_anticlockwise):
 
-    name_cw = sequence_clockwise.name
-    name_acw = sequence_anticlockwise.name
-
     lines_co_ref = {}
-    lines_co_ref[name_cw + '_co_ref'] = xt.Line.from_madx_sequence(
-        sequence_clockwise,
-        deferred_expressions=True,
-        expressions_for_element_types=('kicker', 'hkicker', 'vkicker'),
-        replace_in_expr={'bv_aux': 'bvaux_' + name_cw})
-    lines_co_ref[name_acw + '_co_ref'] = xt.Line.from_madx_sequence(
-        sequence_anticlockwise,
-        deferred_expressions=True,
-        expressions_for_element_types=('kicker', 'hkicker', 'vkicker'),
-        replace_in_expr={'bv_aux': 'bvaux_' + name_acw})
+    if sequence_clockwise is not None:
+        name_cw = sequence_clockwise.name
+        lines_co_ref[name_cw + '_co_ref'] = xt.Line.from_madx_sequence(
+            sequence_clockwise,
+            deferred_expressions=True,
+            expressions_for_element_types=('kicker', 'hkicker', 'vkicker'),
+            replace_in_expr={'bv_aux': 'bvaux_' + name_cw})
+
+    if sequence_anticlockwise is not None:
+        name_acw = sequence_anticlockwise.name
+        lines_co_ref[name_acw + '_co_ref'] = xt.Line.from_madx_sequence(
+            sequence_anticlockwise,
+            deferred_expressions=True,
+            expressions_for_element_types=('kicker', 'hkicker', 'vkicker'),
+            replace_in_expr={'bv_aux': 'bvaux_' + name_acw})
+
     return lines_co_ref
 
 
