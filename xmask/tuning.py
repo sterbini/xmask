@@ -58,17 +58,11 @@ def machine_tuning(line,
             assert 'qx' in targets
             assert 'qy' in targets
 
-<<<<<<< HEAD
             vary.append(xt.Vary(knob_names['q_knob_1'], step=tune_knob_step))
             vary.append(xt.Vary(knob_names['q_knob_2'], step=tune_knob_step))
             match_targets.append(xt.Target('qx', targets['qx'], tol=tune_tol))
             match_targets.append(xt.Target('qy', targets['qy'], tol=tune_tol))
-=======
-            vary.append(xt.Vary(knob_names['q_knob_1'], step=1e-5))
-            vary.append(xt.Vary(knob_names['q_knob_2'], step=1e-5))
-            match_targets.append(xt.Target('qx', targets['qx'], tol=1e-4))
-            match_targets.append(xt.Target('qy', targets['qy'], tol=1e-4))
->>>>>>> 20b9dcc06f862308c19249dd674a924e88ed2c96
+
 
         if enable_chromaticity_correction:
             assert knob_names is not None
