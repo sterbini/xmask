@@ -103,6 +103,11 @@ config_knobs_and_tuning:
       lhcb1: 5
       lhcb2: 5
 
+    tune_knob_step: 1e-8
+    chromaticity_knob_step: 1e-4
+    tune_tol: 1e-5
+    chromaticity_tol: 0.02
+    
     knob_names:
       lhcb1:
         q_knob_1: kqtf.b1
